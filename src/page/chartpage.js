@@ -130,20 +130,14 @@ const ChartPage = () => {
                             </Box>
                             <Box sx={{ flex: "1 1 200px" }}>
                                 <Line data={report.lineData} />
-                                <Typography align="center" sx={{ mt: 1 }}>
-                                    Feeling Rate (Line)
-                                </Typography>
                             </Box>
                             <Box sx={{ flex: "1 1 200px" }}>
                                 <Bar data={report.barData} />
-                                <Typography align="center" sx={{ mt: 1 }}>
-                                    Feeling Rate (Bar)
-                                </Typography>
                             </Box>
                             <Box sx={{ flex: "1 1 200px" }}>
                                 <Radar data={report.radarData} />
                                 <Typography align="center" sx={{ mt: 1 }}>
-                                    Feeling Metrics (Radar)
+                                    Feeling Metrics
                                 </Typography>
                             </Box>
                         </Box>

@@ -3,6 +3,54 @@ import { Box, Grid, Typography, Card, Avatar, IconButton, CardContent } from '@m
 import SettingsIcon from '@mui/icons-material/Settings';
 
 const HomePage = () => {
+    const [medicines, setMedicines] = React.useState([
+        {
+            name: 'A1',
+            functionalIndication: 'A2',
+            usageAndDosage: 'A3'
+        },
+        {
+            name: 'B1',
+            functionalIndication: 'B2',
+            usageAndDosage: 'B3'
+        },
+        {
+            name: 'C1',
+            functionalIndication: 'C2',
+            usageAndDosage: 'C3'
+        },
+        {
+            name: 'D1',
+            functionalIndication: 'D2',
+            usageAndDosage: 'D3'
+        },
+        {
+            name: 'E1',
+            functionalIndication: 'E2',
+            usageAndDosage: 'E3'
+        },
+        {
+            name: 'F1',
+            functionalIndication: 'F2',
+            usageAndDosage: 'F3'
+        },
+        {
+            name: '',
+            functionalIndication: '',
+            usageAndDosage: ''
+        },
+        {
+            name: '',
+            functionalIndication: '',
+            usageAndDosage: ''
+        },
+        {
+            name: '',
+            functionalIndication: '',
+            usageAndDosage: ''
+        },
+    ]);
+
     return (
         <Box
             sx={{
@@ -50,20 +98,25 @@ const HomePage = () => {
                 Warehouse
             </Typography>
             <Grid container spacing={2}>
-                {[...Array(9)].map((_, index) => (
+                {medicines.map((item, index) => (
                     <Grid item xs={4} key={index}>
                         <Card
                             sx={{
                                 padding: 1,
-                                border: index < 6 ? '1px solid green' : '1px dashed gray',
+                                border: item.name != '' ? '1px solid green' : '1px dashed gray',
                                 textAlign: 'center',
                             }}
                         >
-                            <CardContent>
+                            <CardContent
+                                sx={{ padding: '16px 0' }}
+                            >
                                 <Typography variant="body2" gutterBottom>
-                                    No.{index + 1} Warehouse
+                                    No.{index + 1}
                                 </Typography>
-                                {index < 6 ? (
+                                <Typography variant="body2" gutterBottom>
+                                    Warehouse
+                                </Typography>
+                                {item.name != '' ? (
                                     <Typography variant="body2" sx={{ color: 'green', fontWeight: 'bold' }}>
                                         Filled
                                     </Typography>
