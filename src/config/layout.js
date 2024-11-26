@@ -1,18 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
-import { Box, BottomNavigation, BottomNavigationAction, Typography } from '@mui/material';
+import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import HistoryIcon from '@mui/icons-material/History';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import HomePage from '../page/homepage'
-
-const SearchPage = () => (
-  <Typography variant="h5" textAlign="center">Welcome to the Search Page</Typography>
-);
-
-const SettingsPage = () => (
-  <Typography variant="h5" textAlign="center">Welcome to the Settings Page</Typography>
-);
+import RecordPage from '../page/recordpage';
+import ChartPage from '../page/chartpage';
 
 const BottomNav = () => {
   const navigate = useNavigate();
@@ -28,7 +22,7 @@ const BottomNav = () => {
         navigate('/record');
         break;
       case 2:
-        navigate('/my');
+        navigate('/chart');
         break;
       default:
         navigate('/');
@@ -60,8 +54,8 @@ const BottomNav = () => {
 
       />
       <BottomNavigationAction
-        label="My"
-        icon={<AccountCircleIcon />}
+        label="Chart"
+        icon={<BarChartIcon />}
 
       />
     </BottomNavigation>
@@ -85,8 +79,8 @@ const MobileResponsiveAppWithRouting = () => {
         <Box sx={{ flex: 1 }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/record" element={<SearchPage />} />
-            <Route path="/my" element={<SettingsPage />} />
+            <Route path="/record" element={<RecordPage />} />
+            <Route path="/chart" element={<ChartPage />} />
           </Routes>
         </Box>
 
