@@ -4,7 +4,7 @@ import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import HistoryIcon from '@mui/icons-material/History';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import HomePage from '../page/homepage'
+import HomePage from '../page/homepage/homepage'
 import RecordPage from '../page/recordpage';
 import ChartPage from '../page/chartpage';
 

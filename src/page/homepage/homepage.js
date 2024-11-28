@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Box, Grid, Typography, Card, Avatar, IconButton, CardContent } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
+import AddMedicinePopUp from './addmedicinepopup';
 
 const HomePage = () => {
     const [medicines, setMedicines] = React.useState([
@@ -50,6 +51,10 @@ const HomePage = () => {
             usageAndDosage: ''
         },
     ]);
+    const [popupOpen, setPopupOpen] = useState(false);
+
+    const handleOpenPopUp = () => setPopupOpen(true);
+    const handleClosePopUp = () => setPopupOpen(false);
 
     return (
         <Box
@@ -99,7 +104,9 @@ const HomePage = () => {
             </Typography>
             <Grid container spacing={2}>
                 {medicines.map((item, index) => (
-                    <Grid item xs={4} key={index}>
+                    <Grid item xs={4} key={index} onClick={
+                        item.name == '' ? handleOpenPopUp : () => { }
+                    }>
                         <Card
                             sx={{
                                 padding: 1,
@@ -172,6 +179,7 @@ const HomePage = () => {
                     )
                 )}
             </Box>
+            <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} />
         </Box>
     );
 };
