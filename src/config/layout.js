@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import HistoryIcon from '@mui/icons-material/History';
@@ -8,24 +8,13 @@ import HomePage from '../page/homepage/homepage'
 import RecordPage from '../page/recordpage';
 import ChartPage from '../page/chartpage';
 
-const BottomNav = () => {
+const BottomNav = ({ value, setValue }) => {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState(0);
 
   React.useEffect(() => {
-    // Navigate based on the tab index
-    switch (value) {
-      case 0:
-        navigate('/');
-        break;
-      case 1:
-        navigate('/record');
-        break;
-      case 2:
-        navigate('/chart');
-        break;
-      default:
-        navigate('/');
+    const routes = ['/', '/record', '/chart'];
+    if (routes[value]) {
+      navigate(routes[value]);
     }
   }, [value, navigate]);
 
@@ -63,6 +52,8 @@ const BottomNav = () => {
 };
 
 const MobileResponsiveAppWithRouting = () => {
+  const [value, setValue] = React.useState(0);
+
   return (
     <Router>
       <Box
@@ -84,8 +75,7 @@ const MobileResponsiveAppWithRouting = () => {
           </Routes>
         </Box>
 
-        {/* Bottom Navigation */}
-        <BottomNav />
+        <BottomNav value={value} setValue={setValue} />
       </Box>
     </Router>
   );

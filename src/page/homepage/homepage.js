@@ -1,60 +1,111 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { Box, Grid, Typography, Card, Avatar, IconButton, CardContent } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddMedicinePopUp from './addmedicinepopup';
+import { useNavigate } from 'react-router-dom';
+import MedicineDetailModal from './medicinedetailmodal';
 
 const HomePage = () => {
+    const navigate = useNavigate();
     const [medicines, setMedicines] = React.useState([
         {
-            name: 'A1',
+            name: 'afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo ',
             functionalIndication: 'A2',
-            usageAndDosage: 'A3'
+            usageAndDosage: 'A3',
+            note: 'A4',
+            adverseReactions: 'A5',
+            ingredient: 'A6',
+            storageCondition: 'A7'
         },
         {
             name: 'B1',
             functionalIndication: 'B2',
-            usageAndDosage: 'B3'
+            usageAndDosage: 'B3',
+            note: 'A4',
+            adverseReactions: 'A5',
+            ingredient: 'A6',
+            storageCondition: 'A7'
         },
         {
             name: 'C1',
             functionalIndication: 'C2',
-            usageAndDosage: 'C3'
+            usageAndDosage: 'C3',
+            note: 'A4',
+            adverseReactions: 'A5',
+            ingredient: 'A6',
+            storageCondition: 'A7'
         },
         {
             name: 'D1',
             functionalIndication: 'D2',
-            usageAndDosage: 'D3'
+            usageAndDosage: 'D3',
+            note: 'A4',
+            adverseReactions: 'A5',
+            ingredient: 'A6',
+            storageCondition: 'A7'
         },
         {
             name: 'E1',
             functionalIndication: 'E2',
-            usageAndDosage: 'E3'
+            usageAndDosage: 'E3',
+            note: 'A4',
+            adverseReactions: 'A5',
+            ingredient: 'A6',
+            storageCondition: 'A7'
         },
         {
             name: 'F1',
             functionalIndication: 'F2',
-            usageAndDosage: 'F3'
+            usageAndDosage: 'F3',
+            note: 'A4',
+            adverseReactions: 'A5',
+            ingredient: 'A6',
+            storageCondition: 'A7'
         },
         {
             name: '',
             functionalIndication: '',
-            usageAndDosage: ''
+            usageAndDosage: '',
+            note: 'A4',
+            adverseReactions: 'A5',
+            ingredient: 'A6',
+            storageCondition: 'A7'
         },
         {
             name: '',
             functionalIndication: '',
-            usageAndDosage: ''
+            usageAndDosage: '',
+            note: 'A4',
+            adverseReactions: 'A5',
+            ingredient: 'A6',
+            storageCondition: 'A7'
         },
         {
             name: '',
             functionalIndication: '',
-            usageAndDosage: ''
+            usageAndDosage: '',
+            note: 'A4',
+            adverseReactions: 'A5',
+            ingredient: 'A6',
+            storageCondition: 'A7'
         },
     ]);
     const [popupOpen, setPopupOpen] = useState(false);
 
     const handleOpenPopUp = () => setPopupOpen(true);
     const handleClosePopUp = () => setPopupOpen(false);
+    const [medicineDetails, setMedicineDetails] = useState(null);
+    const [openDetailModal, setOpenDetailModal] = useState(false);
+
+    const handleCloseDetailModal = () => {
+        setOpenDetailModal(false);
+        setMedicineDetails(null);
+    }
+
+    const handleOpenDetailModal = (item) => {
+        setMedicineDetails(item);
+        setOpenDetailModal(true);
+    }
 
     return (
         <Box
@@ -105,7 +156,7 @@ const HomePage = () => {
             <Grid container spacing={2}>
                 {medicines.map((item, index) => (
                     <Grid item xs={4} key={index} onClick={
-                        item.name == '' ? handleOpenPopUp : () => { }
+                        item.name == '' ? handleOpenPopUp : () => handleOpenDetailModal(item)
                     }>
                         <Card
                             sx={{
@@ -180,6 +231,7 @@ const HomePage = () => {
                 )}
             </Box>
             <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} />
+            <MedicineDetailModal open={openDetailModal} handleClose={handleCloseDetailModal} details={medicineDetails} />
         </Box>
     );
 };
