@@ -2,22 +2,23 @@ import React, { useState } from 'react';
 import { Box, Grid, Typography, Card, Avatar, IconButton, CardContent } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddMedicinePopUp from './addmedicinepopup';
-import { useNavigate } from 'react-router-dom';
 import MedicineDetailModal from './medicinedetailmodal';
+import SchedulingModal from './schedulingmodal';
 
 const HomePage = () => {
-    const navigate = useNavigate();
     const [medicines, setMedicines] = React.useState([
         {
+            id: 0,
             name: 'afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo ',
-            functionalIndication: 'A2',
-            usageAndDosage: 'A3',
-            note: 'A4',
+            functionalIndication: 'A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf',
+            usageAndDosage: 'A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew',
+            note: 'A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew',
             adverseReactions: 'A5',
             ingredient: 'A6',
             storageCondition: 'A7'
         },
         {
+            id: 1,
             name: 'B1',
             functionalIndication: 'B2',
             usageAndDosage: 'B3',
@@ -27,6 +28,7 @@ const HomePage = () => {
             storageCondition: 'A7'
         },
         {
+            id: 2,
             name: 'C1',
             functionalIndication: 'C2',
             usageAndDosage: 'C3',
@@ -36,6 +38,7 @@ const HomePage = () => {
             storageCondition: 'A7'
         },
         {
+            id: 3,
             name: 'D1',
             functionalIndication: 'D2',
             usageAndDosage: 'D3',
@@ -45,6 +48,7 @@ const HomePage = () => {
             storageCondition: 'A7'
         },
         {
+            id: 4,
             name: 'E1',
             functionalIndication: 'E2',
             usageAndDosage: 'E3',
@@ -54,6 +58,7 @@ const HomePage = () => {
             storageCondition: 'A7'
         },
         {
+            id: 5,
             name: 'F1',
             functionalIndication: 'F2',
             usageAndDosage: 'F3',
@@ -63,6 +68,7 @@ const HomePage = () => {
             storageCondition: 'A7'
         },
         {
+            id: 6,
             name: '',
             functionalIndication: '',
             usageAndDosage: '',
@@ -72,6 +78,7 @@ const HomePage = () => {
             storageCondition: 'A7'
         },
         {
+            id: 7,
             name: '',
             functionalIndication: '',
             usageAndDosage: '',
@@ -81,6 +88,7 @@ const HomePage = () => {
             storageCondition: 'A7'
         },
         {
+            id: 8,
             name: '',
             functionalIndication: '',
             usageAndDosage: '',
@@ -96,6 +104,7 @@ const HomePage = () => {
     const handleClosePopUp = () => setPopupOpen(false);
     const [medicineDetails, setMedicineDetails] = useState(null);
     const [openDetailModal, setOpenDetailModal] = useState(false);
+    const [openSchedulingModal, setOpenSchedulingModal] = useState(false);
 
     const handleCloseDetailModal = () => {
         setOpenDetailModal(false);
@@ -105,6 +114,15 @@ const HomePage = () => {
     const handleOpenDetailModal = (item) => {
         setMedicineDetails(item);
         setOpenDetailModal(true);
+    }
+
+    const handleOpenSchedulingModal = () => {
+        setOpenSchedulingModal(true);
+        handleCloseDetailModal();
+    }
+
+    const handleCloseSchedulingModal = () => {
+        setOpenSchedulingModal(false);
     }
 
     return (
@@ -141,7 +159,7 @@ const HomePage = () => {
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <Avatar alt="User Avatar" />
                     <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
-                        Jack's Medicine Box
+                        Nini's Medicine Box
                     </Typography>
                     <IconButton>
                         <SettingsIcon />
@@ -203,7 +221,7 @@ const HomePage = () => {
                 8:00 AM
             </Typography>
             <Box>
-                {[{ name: 'Dechloridation citrate tablet', quantity: '1 grain' }, { name: 'XXXXXX', quantity: '2 grains' }].map(
+                {[{ name: 'Dechloridation citrate tablet', quantity: '1 grain' }, { name: 'Vitamin', quantity: '2 grains' }].map(
                     (medication, index) => (
                         <Box
                             key={index}
@@ -222,7 +240,7 @@ const HomePage = () => {
                             </Typography>
                             <Box>
                                 <Typography variant="body2">{medication.name}</Typography>
-                                <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                <Typography variant="body2" sx={{ fontWeight: 'bold', textAlign: 'end' }}>
                                     {medication.quantity}
                                 </Typography>
                             </Box>
@@ -231,7 +249,8 @@ const HomePage = () => {
                 )}
             </Box>
             <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} />
-            <MedicineDetailModal open={openDetailModal} handleClose={handleCloseDetailModal} details={medicineDetails} />
+            <MedicineDetailModal open={openDetailModal} handleClose={handleCloseDetailModal} details={medicineDetails} handleOpenSchedulingModal={handleOpenSchedulingModal} setMedicines={setMedicines} />
+            <SchedulingModal open={openSchedulingModal} handleClose={handleCloseSchedulingModal} />
         </Box>
     );
 };

@@ -3,17 +3,17 @@ import { Box, Card, CardContent, Typography } from '@mui/material';
 
 const reminders = [
     {
-        name: "Jack",
+        name: "Nini",
         time: "8:00 AM",
         warehouse: "No. 1",
-        drugName: "Drug A",
+        drugName: "Dechloridation citrate tablet",
         dosage: "1 grain",
     },
     {
-        name: "Jack",
+        name: "Nini",
         time: "1:00 PM",
         warehouse: "No. 2",
-        drugName: "Drug B",
+        drugName: "Vitamin",
         dosage: "2 grains",
     },
 ];

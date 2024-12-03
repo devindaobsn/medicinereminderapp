@@ -35,7 +35,7 @@ ChartJS.register(
 const reports = [
     {
         week: "Week 18 (11/04/2024-18/04/2024)",
-        user: "Jack",
+        user: "Nini",
         pieData: {
             labels: ["Success", "Missed"],
             datasets: [

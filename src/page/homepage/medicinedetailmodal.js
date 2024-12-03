@@ -12,7 +12,7 @@ const fullScreenStyle = {
     boxShadow: 24,
     p: 4,
     overflowY: 'auto', // Enable scrolling if content overflows
-    maxWidth: '400px',
+    maxWidth: '400px'
 };
 
 const closeButtonStyle = {
@@ -21,7 +21,7 @@ const closeButtonStyle = {
     left: '35%',   // Distance from the left of the modal
 };
 
-const MedicineDetailModal = ({ open, handleClose, details }) => {
+const MedicineDetailModal = ({ open, handleClose, details, handleOpenSchedulingModal, setMedicines }) => {
     if (!details) return null;
 
     return (
@@ -32,11 +32,15 @@ const MedicineDetailModal = ({ open, handleClose, details }) => {
             aria-describedby="modal-to-show-medicine-detail"
         >
             <Box sx={fullScreenStyle}>
+
                 <Box sx={{ mt: 3 }}>
                     <Typography sx={{ fontWeight: 'bold' }}>
                         Medicine Name: <span style={{ fontWeight: 'normal' }}>{details.name}</span>
                     </Typography>
-                    <Typography sx={{ fontWeight: 'bold', mt: 2 }}>
+                </Box>
+
+                <Box sx={{ mt: 3 }}>
+                    <Typography sx={{ fontWeight: 'bold' }}>
                         Functional Indication: <span style={{ fontWeight: 'normal' }}>{details.functionalIndication}</span>
                     </Typography>
                 </Box>
@@ -78,8 +82,18 @@ const MedicineDetailModal = ({ open, handleClose, details }) => {
 
                 {/* Set Reminder Button */}
                 <Box sx={{ mt: 4, textAlign: 'center' }}>
-                    <Button variant="contained" color="primary" onClick={() => alert('Reminder set!')}>
+                    <Button variant="contained" color="primary" onClick={() => handleOpenSchedulingModal()}>
                         Set a reminder for this drug
+                    </Button>
+                </Box>
+                <Box sx={{ mt: 4, textAlign: 'center' }}>
+                    <Button variant="contained" backgroundColor='red' sx={{width: 260}} onClick={() => {
+                        handleClose();
+                        setMedicines(prev => prev.map((item, i) =>
+                            i === details.id ? { ...item, name: '' } : item
+                        ))
+                    }}>
+                        Remove this drug
                     </Button>
                 </Box>
                 <Box sx={{ mt: 4, textAlign: 'center' }}>
