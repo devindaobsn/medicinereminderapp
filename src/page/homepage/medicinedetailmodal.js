@@ -87,10 +87,10 @@ const MedicineDetailModal = ({ open, handleClose, details, handleOpenSchedulingM
                     </Button>
                 </Box>
                 <Box sx={{ mt: 4, textAlign: 'center' }}>
-                    <Button variant="contained" backgroundColor='red' sx={{width: 260}} onClick={() => {
+                    <Button variant="contained" backgroundColor='red' sx={{ width: 260 }} onClick={() => {
                         handleClose();
                         setMedicines(prev => prev.map((item, i) =>
-                            i === details.id ? { ...item, name: '' } : item
+                            i === details.id ? { ...item, name: '', functionalIndication: '' } : item
                         ))
                     }}>
                         Remove this drug

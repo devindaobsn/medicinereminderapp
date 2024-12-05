@@ -24,7 +24,6 @@ const SchedulingModal = ({ open, handleClose }) => {
                     maxWidth: '400px'
                 }}
             >
-                {/* Header */}
                 <Typography variant="h5" sx={{ color: 'green', fontWeight: 'bold', mb: 2 }}>
                     Scheduling
                 </Typography>

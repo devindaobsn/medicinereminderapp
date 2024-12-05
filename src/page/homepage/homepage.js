@@ -4,6 +4,10 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import AddMedicinePopUp from './addmedicinepopup';
 import MedicineDetailModal from './medicinedetailmodal';
 import SchedulingModal from './schedulingmodal';
+import AddMedicineManualModal from './addmedicinemanualmodal';
+import SetVoiceModal from './setVoiceModal';
+import SupportAgentIcon from '@mui/icons-material/SupportAgent';
+import AIModal from './aimodal';
 
 const HomePage = () => {
     const [medicines, setMedicines] = React.useState([
@@ -100,11 +104,19 @@ const HomePage = () => {
     ]);
     const [popupOpen, setPopupOpen] = useState(false);
 
-    const handleOpenPopUp = () => setPopupOpen(true);
+    const handleOpenPopUp = (index) => {
+        setPopupOpen(true);
+        setMedicineIndexAdd(index)
+    };
     const handleClosePopUp = () => setPopupOpen(false);
     const [medicineDetails, setMedicineDetails] = useState(null);
     const [openDetailModal, setOpenDetailModal] = useState(false);
     const [openSchedulingModal, setOpenSchedulingModal] = useState(false);
+    const [openAddMedicineManual, setOpenAddMedicineManual] = useState(false);
+    const [step, setStep] = useState(1);
+    const [medicineIndexAdd, setMedicineIndexAdd] = useState(0);
+    const [openVoiceModal, setOpenVoiceModal] = useState(false);
+    const [openAIModal, setOpenAIModal] = useState(false);
 
     const handleCloseDetailModal = () => {
         setOpenDetailModal(false);
@@ -123,6 +135,16 @@ const HomePage = () => {
 
     const handleCloseSchedulingModal = () => {
         setOpenSchedulingModal(false);
+    }
+
+    const handleOpenAddMedicineManual = () => {
+        setOpenAddMedicineManual(true)
+        setPopupOpen(false)
+    }
+
+    const handleCloseAddMedicineManual = () => {
+        setOpenAddMedicineManual(false)
+        setStep(1);
     }
 
     return (
@@ -161,8 +183,11 @@ const HomePage = () => {
                     <Typography variant="body1" sx={{ whiteSpace: 'nowrap' }}>
                         Nini's Medicine Box
                     </Typography>
-                    <IconButton>
+                    <IconButton onClick={() => setOpenVoiceModal(true)}>
                         <SettingsIcon />
+                    </IconButton>
+                    <IconButton onClick={() => setOpenAIModal(true)}>
+                        <SupportAgentIcon />
                     </IconButton>
                 </Box>
             </Box>
@@ -174,7 +199,7 @@ const HomePage = () => {
             <Grid container spacing={2}>
                 {medicines.map((item, index) => (
                     <Grid item xs={4} key={index} onClick={
-                        item.name == '' ? handleOpenPopUp : () => handleOpenDetailModal(item)
+                        item.name == '' ? () => handleOpenPopUp(index) : () => handleOpenDetailModal(item)
                     }>
                         <Card
                             sx={{
@@ -248,9 +273,12 @@ const HomePage = () => {
                     )
                 )}
             </Box>
-            <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} />
-            <MedicineDetailModal open={openDetailModal} handleClose={handleCloseDetailModal} details={medicineDetails} handleOpenSchedulingModal={handleOpenSchedulingModal} setMedicines={setMedicines} />
-            <SchedulingModal open={openSchedulingModal} handleClose={handleCloseSchedulingModal} />
+            {popupOpen && <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} onClickAddManual={handleOpenAddMedicineManual} />}
+            {openDetailModal && <MedicineDetailModal open={openDetailModal} handleClose={handleCloseDetailModal} details={medicineDetails} handleOpenSchedulingModal={handleOpenSchedulingModal} setMedicines={setMedicines} />}
+            {openSchedulingModal && <SchedulingModal open={openSchedulingModal} handleClose={handleCloseSchedulingModal} />}
+            {openAddMedicineManual && <AddMedicineManualModal open={openAddMedicineManual} handleClose={handleCloseAddMedicineManual} step={step} setStep={setStep} medicines={medicines} medicineIndex={medicineIndexAdd} setMedicines={setMedicines} />}
+            {openVoiceModal && <SetVoiceModal open={openVoiceModal} onClose={() => setOpenVoiceModal(false)} />}
+                {openAIModal && <AIModal open={openAIModal} onClose={() => setOpenAIModal(false)}/>}
         </Box>
     );
 };

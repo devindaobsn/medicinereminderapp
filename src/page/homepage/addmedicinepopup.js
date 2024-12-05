@@ -13,7 +13,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const AddMedicinePopUp = ({ open, onClose }) => {
+const AddMedicinePopUp = ({ open, onClose, onClickAddManual }) => {
     return (
         <Dialog
             open={open}
@@ -32,8 +32,8 @@ const AddMedicinePopUp = ({ open, onClose }) => {
             </DialogTitle>
             <DialogContent>
                 <Box display="flex" flexDirection="column" gap={2}>
-                    <Button variant="outlined">Scan to add</Button>
-                    <Button variant="outlined">Manually add</Button>
+                    <Button variant="outlined" >Scan to add</Button>
+                    <Button variant="outlined" onClick={onClickAddManual}>Manually add</Button>
                 </Box>
             </DialogContent>
             <DialogActions>
