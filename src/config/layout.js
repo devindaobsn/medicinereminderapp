@@ -12,7 +12,7 @@ const BottomNav = ({ value, setValue }) => {
   const navigate = useNavigate();
 
   React.useEffect(() => {
-    const routes = ['/', '/record', '/chart'];
+    const routes = ['/medicinereminderapp', '/medicinereminderapp/record', '/medicinereminderapp/chart'];
     if (routes[value]) {
       navigate(routes[value]);
     }
@@ -69,9 +69,9 @@ const MobileResponsiveAppWithRouting = () => {
         {/* Main Content */}
         <Box sx={{ flex: 1 }}>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/record" element={<RecordPage />} />
-            <Route path="/chart" element={<ChartPage />} />
+            <Route path="/medicinereminderapp" element={<HomePage />} />
+            <Route path="/medicinereminderapp/record" element={<RecordPage />} />
+            <Route path="/medicinereminderapp/chart" element={<ChartPage />} />
           </Routes>
         </Box>
 

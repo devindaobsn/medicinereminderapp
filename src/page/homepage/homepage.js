@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, Grid, Typography, Card, Avatar, IconButton, CardContent } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddMedicinePopUp from './addmedicinepopup';
@@ -8,100 +8,226 @@ import AddMedicineManualModal from './addmedicinemanualmodal';
 import SetVoiceModal from './setVoiceModal';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import AIModal from './aimodal';
+import BarcodeModal from './barcodemodal';
+
+const randomMedicine = [
+    {
+        id: 1,
+        name: 'Lisinopril',
+        functionalIndication: 'Used for hypertension',
+        usageAndDosage: 'Take 1 tablet once a day',
+        note: 'Take with or without food, preferably at the same time each day',
+        adverseReactions: 'Dizziness, headache, fatigue',
+        ingredient: 'Lisinopril',
+        storageCondition: 'Store in a cool, dry place away from light',
+    },
+    {
+        id: 2,
+        name: 'Metformin',
+        functionalIndication: 'Used for diabetes management',
+        usageAndDosage: 'Take 1 tablet with meals twice a day',
+        note: 'Monitor blood sugar levels regularly',
+        adverseReactions: 'Stomach upset, nausea, diarrhea',
+        ingredient: 'Metformin',
+        storageCondition: 'Store at room temperature, away from moisture',
+    },
+    {
+        id: 3,
+        name: 'Ibuprofen',
+        functionalIndication: 'Used for pain relief and inflammation',
+        usageAndDosage: 'Take 1 tablet every 4-6 hours as needed',
+        note: 'Do not exceed 6 tablets in 24 hours',
+        adverseReactions: 'Stomach upset, dizziness, headache',
+        ingredient: 'Ibuprofen',
+        storageCondition: 'Store in a dry place at room temperature',
+    },
+    {
+        id: 4,
+        name: 'Loratadine',
+        functionalIndication: 'Used for treating allergies',
+        usageAndDosage: 'Take 1 tablet once a day',
+        note: 'May cause drowsiness in some individuals',
+        adverseReactions: 'Drowsiness, dry mouth, headache',
+        ingredient: 'Loratadine',
+        storageCondition: 'Store in a cool, dry place',
+    },
+    {
+        id: 5,
+        name: 'Atorvastatin',
+        functionalIndication: 'Used for lowering cholesterol levels',
+        usageAndDosage: 'Take 1 tablet daily at bedtime',
+        note: 'Regular blood tests are required to monitor cholesterol levels',
+        adverseReactions: 'Muscle pain, nausea, headache',
+        ingredient: 'Atorvastatin',
+        storageCondition: 'Store in a cool, dry place, away from heat',
+    },
+    {
+        id: 6,
+        name: 'Diazepam',
+        functionalIndication: 'Used for anxiety and seizure disorders',
+        usageAndDosage: 'Take 1 tablet 1-2 times a day as prescribed',
+        note: 'Avoid alcohol while taking this medication',
+        adverseReactions: 'Drowsiness, dizziness, fatigue',
+        ingredient: 'Diazepam',
+        storageCondition: 'Store at room temperature, away from light',
+    },
+    {
+        id: 7,
+        name: 'Sertraline',
+        functionalIndication: 'Used for depression and anxiety treatment',
+        usageAndDosage: 'Take 1 tablet once a day in the morning',
+        note: 'It may take several weeks to notice the full effects',
+        adverseReactions: 'Nausea, insomnia, sexual dysfunction',
+        ingredient: 'Sertraline',
+        storageCondition: 'Store in a cool, dry place, away from sunlight',
+    },
+    {
+        id: 8,
+        name: 'Propranolol',
+        functionalIndication: 'Used for treating high blood pressure and anxiety',
+        usageAndDosage: 'Take 1 tablet 2-3 times a day',
+        note: 'Do not suddenly stop taking this medication without consulting your doctor',
+        adverseReactions: 'Fatigue, dizziness, slow heart rate',
+        ingredient: 'Propranolol',
+        storageCondition: 'Store at room temperature, away from moisture',
+    },
+    {
+        id: 9,
+        name: 'Salbutamol',
+        functionalIndication: 'Used for asthma and bronchitis treatment',
+        usageAndDosage: 'Inhale 1 dose every 4-6 hours as needed',
+        note: 'Rinse mouth after use to avoid throat irritation',
+        adverseReactions: 'Shaky hands, increased heart rate, headache',
+        ingredient: 'Salbutamol',
+        storageCondition: 'Store in a cool, dry place, away from heat',
+    },
+    {
+        id: 10,
+        name: 'Amoxicillin',
+        functionalIndication: 'Used for bacterial infections',
+        usageAndDosage: 'Take 1 capsule every 12 hours for 7 days',
+        note: 'Complete the full course of treatment to avoid antibiotic resistance',
+        adverseReactions: 'Diarrhea, rash, nausea',
+        ingredient: 'Amoxicillin',
+        storageCondition: 'Store in a cool, dry place, away from light',
+    },
+    {
+        id: 11,
+        name: 'Orlistat',
+        functionalIndication: 'Used for weight loss',
+        usageAndDosage: 'Take 1 capsule with each meal containing fat',
+        note: 'Monitor fat intake while on this medication',
+        adverseReactions: 'Stomach cramps, diarrhea, flatulence',
+        ingredient: 'Orlistat',
+        storageCondition: 'Store in a cool, dry place, away from children',
+    },
+];
 
 const HomePage = () => {
     const [medicines, setMedicines] = React.useState([
         {
             id: 0,
-            name: 'afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo afdsfaj fjpsafw fjoepaf afewpo ',
-            functionalIndication: 'A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew djiewaf',
-            usageAndDosage: 'A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew',
-            note: 'A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew A2 fdshafoiewo fjiosafoiew djiewaf fdshafoiewo fjiosafoiew',
-            adverseReactions: 'A5',
-            ingredient: 'A6',
-            storageCondition: 'A7'
+            name: 'Aspirin',
+            functionalIndication: 'Used for hypertension',
+            usageAndDosage: 'Take 1 tablet twice a day with food',
+            note: 'Take with caution if allergic to aspirin',
+            adverseReactions: 'Nausea, dizziness, headaches',
+            ingredient: 'Aspirin, Hydrochlorothiazide',
+            storageCondition: 'Store in a cool, dry place away from light',
         },
         {
             id: 1,
-            name: 'B1',
-            functionalIndication: 'B2',
-            usageAndDosage: 'B3',
-            note: 'A4',
-            adverseReactions: 'A5',
-            ingredient: 'A6',
-            storageCondition: 'A7'
+            name: 'Ibuprofen',
+            functionalIndication: 'Pain relief',
+            usageAndDosage: 'Take 1 tablet every 4-6 hours as needed',
+            note: 'Do not exceed 4 doses in 24 hours',
+            adverseReactions: 'Drowsiness, constipation',
+            ingredient: 'Acetaminophen',
+            storageCondition: 'Keep in a tightly closed container at room temperature',
         },
         {
             id: 2,
-            name: 'C1',
-            functionalIndication: 'C2',
-            usageAndDosage: 'C3',
-            note: 'A4',
-            adverseReactions: 'A5',
-            ingredient: 'A6',
-            storageCondition: 'A7'
+            name: 'Amoxicillin',
+            functionalIndication: 'Antibiotic for bacterial infections',
+            usageAndDosage: 'Take 1 capsule three times a day with food',
+            note: 'Finish the full course even if you feel better',
+            adverseReactions: 'Diarrhea, allergic reaction',
+            ingredient: 'Amoxicillin',
+            storageCondition: 'Store in a cool, dry place, away from moisture',
         },
         {
             id: 3,
-            name: 'D1',
-            functionalIndication: 'D2',
-            usageAndDosage: 'D3',
-            note: 'A4',
-            adverseReactions: 'A5',
-            ingredient: 'A6',
-            storageCondition: 'A7'
+            name: 'Atorvastatin',
+            functionalIndication: 'Cholesterol management',
+            usageAndDosage: 'Take 1 tablet once daily, preferably at night',
+            note: 'Avoid consuming grapefruit juice while taking this medicine',
+            adverseReactions: 'Muscle pain, liver dysfunction',
+            ingredient: 'Atorvastatin',
+            storageCondition: 'Store at room temperature, away from light and moisture',
         },
         {
             id: 4,
-            name: 'E1',
-            functionalIndication: 'E2',
-            usageAndDosage: 'E3',
-            note: 'A4',
-            adverseReactions: 'A5',
-            ingredient: 'A6',
-            storageCondition: 'A7'
+            name: 'Cetirizine',
+            functionalIndication: 'Relieves allergy symptoms',
+            usageAndDosage: 'Take 1 tablet once a day',
+            note: 'Can cause drowsiness in some people',
+            adverseReactions: 'Dry mouth, dizziness, drowsiness',
+            ingredient: 'Cetirizine',
+            storageCondition: 'Store in a cool, dry place away from heat',
         },
         {
             id: 5,
-            name: 'F1',
-            functionalIndication: 'F2',
-            usageAndDosage: 'F3',
-            note: 'A4',
-            adverseReactions: 'A5',
-            ingredient: 'A6',
-            storageCondition: 'A7'
+            name: '',
+            functionalIndication: '',
+            usageAndDosage: '',
+            note: '',
+            adverseReactions: '',
+            ingredient: '',
+            storageCondition: ''
         },
         {
             id: 6,
             name: '',
             functionalIndication: '',
             usageAndDosage: '',
-            note: 'A4',
-            adverseReactions: 'A5',
-            ingredient: 'A6',
-            storageCondition: 'A7'
+            note: '',
+            adverseReactions: '',
+            ingredient: '',
+            storageCondition: ''
         },
         {
             id: 7,
             name: '',
             functionalIndication: '',
             usageAndDosage: '',
-            note: 'A4',
-            adverseReactions: 'A5',
-            ingredient: 'A6',
-            storageCondition: 'A7'
+            note: '',
+            adverseReactions: '',
+            ingredient: '',
+            storageCondition: ''
         },
         {
             id: 8,
             name: '',
             functionalIndication: '',
             usageAndDosage: '',
-            note: 'A4',
-            adverseReactions: 'A5',
-            ingredient: 'A6',
-            storageCondition: 'A7'
+            note: '',
+            adverseReactions: '',
+            ingredient: '',
+            storageCondition: ''
         },
     ]);
+
+    useEffect(() => {
+        const medicines = localStorage.getItem('medicines');
+        if (medicines) {
+            setMedicines(JSON.parse(medicines));
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('medicines', JSON.stringify(medicines));
+    }, [medicines]);
+
     const [popupOpen, setPopupOpen] = useState(false);
 
     const handleOpenPopUp = (index) => {
@@ -117,6 +243,7 @@ const HomePage = () => {
     const [medicineIndexAdd, setMedicineIndexAdd] = useState(0);
     const [openVoiceModal, setOpenVoiceModal] = useState(false);
     const [openAIModal, setOpenAIModal] = useState(false);
+    const [openScanBarCode, setopenScanBarCode] = useState(false);
 
     const handleCloseDetailModal = () => {
         setOpenDetailModal(false);
@@ -145,6 +272,17 @@ const HomePage = () => {
     const handleCloseAddMedicineManual = () => {
         setOpenAddMedicineManual(false)
         setStep(1);
+    }
+
+    const handleSubmitScan = () => {
+        let medicineAdd = randomMedicine[Math.floor(Math.random() * 11)];
+        medicineAdd.id = medicineIndexAdd;
+        setMedicines(prev => prev.map((item, i) =>
+            i === medicineIndexAdd ? medicineAdd : item
+        ))
+        setOpenDetailModal(true);
+        setMedicineDetails(medicineAdd);
+        setopenScanBarCode(false)
     }
 
     return (
@@ -273,12 +411,13 @@ const HomePage = () => {
                     )
                 )}
             </Box>
-            {popupOpen && <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} onClickAddManual={handleOpenAddMedicineManual} />}
+            {popupOpen && <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} onClickAddManual={handleOpenAddMedicineManual} onClickScan={() => { setopenScanBarCode(true); setPopupOpen(false); }} />}
             {openDetailModal && <MedicineDetailModal open={openDetailModal} handleClose={handleCloseDetailModal} details={medicineDetails} handleOpenSchedulingModal={handleOpenSchedulingModal} setMedicines={setMedicines} />}
             {openSchedulingModal && <SchedulingModal open={openSchedulingModal} handleClose={handleCloseSchedulingModal} />}
             {openAddMedicineManual && <AddMedicineManualModal open={openAddMedicineManual} handleClose={handleCloseAddMedicineManual} step={step} setStep={setStep} medicines={medicines} medicineIndex={medicineIndexAdd} setMedicines={setMedicines} />}
             {openVoiceModal && <SetVoiceModal open={openVoiceModal} onClose={() => setOpenVoiceModal(false)} />}
-                {openAIModal && <AIModal open={openAIModal} onClose={() => setOpenAIModal(false)}/>}
+            {openAIModal && <AIModal open={openAIModal} onClose={() => setOpenAIModal(false)} />}
+            {openScanBarCode && <BarcodeModal open={openScanBarCode} onClose={() => setopenScanBarCode(false)} handleSubmit={handleSubmitScan}/>}
         </Box>
     );
 };
