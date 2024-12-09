@@ -1,12 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Box, Typography, TextField, Button, IconButton, MenuItem } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-const SchedulingModal = ({ open, handleClose }) => {
+const SchedulingModal = ({ open, handleClose, medicineIndexAdd, handleChangeRemindList }) => {
     const [timesPerDay, setTimesPerDay] = useState(3);
     const [detailSchedule, setDetailSchedule] = useState([{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }]);
     const [grainsPerTime, setGrainsPerTime] = useState(1);
     const [choosingTag, setChoosingTag] = useState(0);
+
+    useEffect(() => {
+        const medicines = JSON.parse(localStorage.getItem('medicines'));
+        setTimesPerDay(medicines[medicineIndexAdd].timesPerDay);
+        setDetailSchedule(medicines[medicineIndexAdd].detailSchedule);
+        setGrainsPerTime(medicines[medicineIndexAdd].grainsPerTime);
+        setChoosingTag(medicines[medicineIndexAdd].choosingTag);
+    }, []);
+
+    useEffect(() => {
+        const medicines = JSON.parse(localStorage.getItem('medicines'));
+        const newMedicines = medicines.map((item, i) => {
+            return (
+                i == medicineIndexAdd ? { ...item, timesPerDay: timesPerDay, detailSchedule: detailSchedule, grainsPerTime: grainsPerTime, choosingTag: choosingTag } : item)
+        });
+        localStorage.setItem('medicines', JSON.stringify(newMedicines));
+        handleChangeRemindList();
+    }, [timesPerDay, detailSchedule, grainsPerTime, choosingTag]);
 
     return (
         <Modal open={open} onClose={handleClose} aria-labelledby="scheduling-modal">
@@ -85,7 +103,7 @@ const SchedulingModal = ({ open, handleClose }) => {
                         >
                             <IconButton sx={{ color: 'white' }}><AccessTimeIcon /></IconButton>
                             <TextField
-                                defaultValue={slot.time}
+                                value={slot.time}
                                 select
                                 size="small"
                                 sx={{
@@ -94,7 +112,9 @@ const SchedulingModal = ({ open, handleClose }) => {
                                 }}
                             >
                                 {['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00'].map((option) => (
-                                    <MenuItem key={option} value={option}>
+                                    <MenuItem key={option} value={option} onClick={() => {
+                                        setDetailSchedule(pre => pre.map((e, i) => i == index ? { ...e, time: option } : e))
+                                    }}>
                                         {option}
                                     </MenuItem>
                                 ))}

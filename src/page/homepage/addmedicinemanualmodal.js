@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal, Box, Button, Typography, TextField, IconButton, MenuItem } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
-const AddMedicineManualModal = ({ open, handleClose, step, setStep, medicines, setMedicines, medicineIndex }) => {
+const AddMedicineManualModal = ({ open, handleClose, step, setStep, medicines, setMedicines, medicineIndex, handleChangeRemindList }) => {
     const handleNext = () => setStep((prev) => prev + 1);
     const handleBack = () => setStep((prev) => prev - 1);
 
@@ -32,7 +32,7 @@ const AddMedicineManualModal = ({ open, handleClose, step, setStep, medicines, s
                 {step === 2 && <StepTwo onNext={handleNext} onBack={handleBack} text={medicines[medicineIndex].name} onChangeText={(type) => setMedicines(prev => prev.map((item, i) =>
                     i === medicineIndex ? { ...item, name: type } : item
                 ))} />}
-                {step === 3 && <StepThree onBack={handleBack} onClose={handleClose} />}
+                {step === 3 && <StepThree onBack={handleBack} onClose={handleClose} handleChangeRemindList={handleChangeRemindList} medicineIndex={medicineIndex} />}
             </Box>
         </Modal>
     );
@@ -98,11 +98,29 @@ const StepTwo = ({ onNext, onBack, text, onChangeText }) => {
     );
 };
 
-const StepThree = ({ onBack, onClose }) => {
+const StepThree = ({ onBack, onClose, handleChangeRemindList, medicineIndex }) => {
     const [timesPerDay, setTimesPerDay] = useState(3);
     const [detailSchedule, setDetailSchedule] = useState([{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }]);
     const [grainsPerTime, setGrainsPerTime] = useState(1);
     const [choosingTag, setChoosingTag] = useState(0);
+
+    useEffect(() => {
+        const medicines = JSON.parse(localStorage.getItem('medicines'));
+        setTimesPerDay(medicines[medicineIndex].timesPerDay);
+        setDetailSchedule(medicines[medicineIndex].detailSchedule);
+        setGrainsPerTime(medicines[medicineIndex].grainsPerTime);
+        setChoosingTag(medicines[medicineIndex].choosingTag);
+    }, []);
+
+    useEffect(() => {
+        const medicines = JSON.parse(localStorage.getItem('medicines'));
+        const newMedicines = medicines.map((item, i) => {
+            return (
+                i == medicineIndex ? { ...item, timesPerDay: timesPerDay, detailSchedule: detailSchedule, grainsPerTime: grainsPerTime, choosingTag: choosingTag } : item)
+        });
+        localStorage.setItem('medicines', JSON.stringify(newMedicines));
+        handleChangeRemindList();
+    }, [timesPerDay, detailSchedule, grainsPerTime, choosingTag]);
 
     return (
         <Box

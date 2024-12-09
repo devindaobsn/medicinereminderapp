@@ -32,7 +32,6 @@ const MedicineDetailModal = ({ open, handleClose, details, handleOpenSchedulingM
             aria-describedby="modal-to-show-medicine-detail"
         >
             <Box sx={fullScreenStyle}>
-
                 <Box sx={{ mt: 3 }}>
                     <Typography sx={{ fontWeight: 'bold' }}>
                         Medicine Name: <span style={{ fontWeight: 'normal' }}>{details.name}</span>

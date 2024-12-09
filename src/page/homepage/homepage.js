@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Grid, Typography, Card, Avatar, IconButton, CardContent } from '@mui/material';
+import { Box, Grid, Typography, Card, Avatar, IconButton, CardContent, Tooltip } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import AddMedicinePopUp from './addmedicinepopup';
 import MedicineDetailModal from './medicinedetailmodal';
@@ -9,6 +9,7 @@ import SetVoiceModal from './setVoiceModal';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import AIModal from './aimodal';
 import BarcodeModal from './barcodemodal';
+import BotImage from './image.png'
 
 const randomMedicine = [
     {
@@ -20,6 +21,11 @@ const randomMedicine = [
         adverseReactions: 'Dizziness, headache, fatigue',
         ingredient: 'Lisinopril',
         storageCondition: 'Store in a cool, dry place away from light',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
+
     },
     {
         id: 2,
@@ -30,6 +36,10 @@ const randomMedicine = [
         adverseReactions: 'Stomach upset, nausea, diarrhea',
         ingredient: 'Metformin',
         storageCondition: 'Store at room temperature, away from moisture',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
     {
         id: 3,
@@ -40,6 +50,10 @@ const randomMedicine = [
         adverseReactions: 'Stomach upset, dizziness, headache',
         ingredient: 'Ibuprofen',
         storageCondition: 'Store in a dry place at room temperature',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
     {
         id: 4,
@@ -50,6 +64,10 @@ const randomMedicine = [
         adverseReactions: 'Drowsiness, dry mouth, headache',
         ingredient: 'Loratadine',
         storageCondition: 'Store in a cool, dry place',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
     {
         id: 5,
@@ -60,6 +78,10 @@ const randomMedicine = [
         adverseReactions: 'Muscle pain, nausea, headache',
         ingredient: 'Atorvastatin',
         storageCondition: 'Store in a cool, dry place, away from heat',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
     {
         id: 6,
@@ -70,6 +92,10 @@ const randomMedicine = [
         adverseReactions: 'Drowsiness, dizziness, fatigue',
         ingredient: 'Diazepam',
         storageCondition: 'Store at room temperature, away from light',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
     {
         id: 7,
@@ -80,6 +106,10 @@ const randomMedicine = [
         adverseReactions: 'Nausea, insomnia, sexual dysfunction',
         ingredient: 'Sertraline',
         storageCondition: 'Store in a cool, dry place, away from sunlight',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
     {
         id: 8,
@@ -90,6 +120,10 @@ const randomMedicine = [
         adverseReactions: 'Fatigue, dizziness, slow heart rate',
         ingredient: 'Propranolol',
         storageCondition: 'Store at room temperature, away from moisture',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
     {
         id: 9,
@@ -100,6 +134,10 @@ const randomMedicine = [
         adverseReactions: 'Shaky hands, increased heart rate, headache',
         ingredient: 'Salbutamol',
         storageCondition: 'Store in a cool, dry place, away from heat',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
     {
         id: 10,
@@ -110,6 +148,10 @@ const randomMedicine = [
         adverseReactions: 'Diarrhea, rash, nausea',
         ingredient: 'Amoxicillin',
         storageCondition: 'Store in a cool, dry place, away from light',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
     {
         id: 11,
@@ -120,6 +162,10 @@ const randomMedicine = [
         adverseReactions: 'Stomach cramps, diarrhea, flatulence',
         ingredient: 'Orlistat',
         storageCondition: 'Store in a cool, dry place, away from children',
+        timesPerDay: 3,
+        detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+        grainsPerTime: 1,
+        choosingTag: 0
     },
 ];
 
@@ -134,46 +180,65 @@ const HomePage = () => {
             adverseReactions: 'Nausea, dizziness, headaches',
             ingredient: 'Aspirin, Hydrochlorothiazide',
             storageCondition: 'Store in a cool, dry place away from light',
+            timesPerDay: 3,
+            detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+            grainsPerTime: 1,
+            choosingTag: 0
         },
         {
             id: 1,
-            name: 'Ibuprofen',
-            functionalIndication: 'Pain relief',
-            usageAndDosage: 'Take 1 tablet every 4-6 hours as needed',
-            note: 'Do not exceed 4 doses in 24 hours',
-            adverseReactions: 'Drowsiness, constipation',
-            ingredient: 'Acetaminophen',
-            storageCondition: 'Keep in a tightly closed container at room temperature',
+            name: '',
+            functionalIndication: '',
+            usageAndDosage: '',
+            note: '',
+            adverseReactions: '',
+            ingredient: '',
+            storageCondition: '', timesPerDay: 3,
+            detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+            grainsPerTime: 1,
+            choosingTag: 0
         },
         {
             id: 2,
-            name: 'Amoxicillin',
-            functionalIndication: 'Antibiotic for bacterial infections',
-            usageAndDosage: 'Take 1 capsule three times a day with food',
-            note: 'Finish the full course even if you feel better',
-            adverseReactions: 'Diarrhea, allergic reaction',
-            ingredient: 'Amoxicillin',
-            storageCondition: 'Store in a cool, dry place, away from moisture',
+            name: '',
+            functionalIndication: '',
+            usageAndDosage: '',
+            note: '',
+            adverseReactions: '',
+            ingredient: '',
+            storageCondition: '',
+            timesPerDay: 3,
+            detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+            grainsPerTime: 1,
+            choosingTag: 0
         },
         {
             id: 3,
-            name: 'Atorvastatin',
-            functionalIndication: 'Cholesterol management',
-            usageAndDosage: 'Take 1 tablet once daily, preferably at night',
-            note: 'Avoid consuming grapefruit juice while taking this medicine',
-            adverseReactions: 'Muscle pain, liver dysfunction',
-            ingredient: 'Atorvastatin',
-            storageCondition: 'Store at room temperature, away from light and moisture',
+            name: '',
+            functionalIndication: '',
+            usageAndDosage: '',
+            note: '',
+            adverseReactions: '',
+            ingredient: '',
+            storageCondition: '',
+            timesPerDay: 3,
+            detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+            grainsPerTime: 1,
+            choosingTag: 0
         },
         {
             id: 4,
-            name: 'Cetirizine',
-            functionalIndication: 'Relieves allergy symptoms',
-            usageAndDosage: 'Take 1 tablet once a day',
-            note: 'Can cause drowsiness in some people',
-            adverseReactions: 'Dry mouth, dizziness, drowsiness',
-            ingredient: 'Cetirizine',
-            storageCondition: 'Store in a cool, dry place away from heat',
+            name: '',
+            functionalIndication: '',
+            usageAndDosage: '',
+            note: '',
+            adverseReactions: '',
+            ingredient: '',
+            storageCondition: '',
+            timesPerDay: 3,
+            detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+            grainsPerTime: 1,
+            choosingTag: 0
         },
         {
             id: 5,
@@ -183,7 +248,11 @@ const HomePage = () => {
             note: '',
             adverseReactions: '',
             ingredient: '',
-            storageCondition: ''
+            storageCondition: '',
+            timesPerDay: 3,
+            detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+            grainsPerTime: 1,
+            choosingTag: 0
         },
         {
             id: 6,
@@ -193,7 +262,11 @@ const HomePage = () => {
             note: '',
             adverseReactions: '',
             ingredient: '',
-            storageCondition: ''
+            storageCondition: '',
+            timesPerDay: 3,
+            detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+            grainsPerTime: 1,
+            choosingTag: 0
         },
         {
             id: 7,
@@ -203,7 +276,11 @@ const HomePage = () => {
             note: '',
             adverseReactions: '',
             ingredient: '',
-            storageCondition: ''
+            storageCondition: '',
+            timesPerDay: 3,
+            detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+            grainsPerTime: 1,
+            choosingTag: 0
         },
         {
             id: 8,
@@ -213,7 +290,11 @@ const HomePage = () => {
             note: '',
             adverseReactions: '',
             ingredient: '',
-            storageCondition: ''
+            storageCondition: '',
+            timesPerDay: 3,
+            detailSchedule: [{ time: '08:00' }, { time: '13:00' }, { time: '21:00' }],
+            grainsPerTime: 1,
+            choosingTag: 0
         },
     ]);
 
@@ -221,11 +302,15 @@ const HomePage = () => {
         const medicines = localStorage.getItem('medicines');
         if (medicines) {
             setMedicines(JSON.parse(medicines));
+        } else {
+            localStorage.setItem('medicines', JSON.stringify(medicines));
         }
+        handleChangeRemindList();
     }, []);
 
     useEffect(() => {
         localStorage.setItem('medicines', JSON.stringify(medicines));
+        handleChangeRemindList();
     }, [medicines]);
 
     const [popupOpen, setPopupOpen] = useState(false);
@@ -243,7 +328,8 @@ const HomePage = () => {
     const [medicineIndexAdd, setMedicineIndexAdd] = useState(0);
     const [openVoiceModal, setOpenVoiceModal] = useState(false);
     const [openAIModal, setOpenAIModal] = useState(false);
-    const [openScanBarCode, setopenScanBarCode] = useState(false);
+    const [openScanBarCode, setOpenScanBarCode] = useState(false);
+    const [remindList, setRemindList] = useState([])
 
     const handleCloseDetailModal = () => {
         setOpenDetailModal(false);
@@ -282,7 +368,45 @@ const HomePage = () => {
         ))
         setOpenDetailModal(true);
         setMedicineDetails(medicineAdd);
-        setopenScanBarCode(false)
+        setOpenScanBarCode(false)
+    }
+
+    const handleChangeRemindList = () => {
+        const now = new Date();
+        const currentTimeString = now.toTimeString().slice(0, 5);
+        let result = [];
+        let resultNoGroup = [];
+        const medicines = JSON.parse(localStorage.getItem('medicines'));
+        medicines.forEach(element => {
+            if (element.name != '') {
+                element.detailSchedule.forEach(e => {
+                    // if (e.time >= currentTimeString) {
+                    if (true) {
+                        resultNoGroup = [...resultNoGroup, {
+                            time: e.time,
+                            name: element.name,
+                            grainsPerTime: element.grainsPerTime,
+                            id: element.id
+                        }]
+                    }
+                })
+            }
+        });
+        let resultRaw = resultNoGroup.reduce((time, detail) => {
+            if (!time[detail.time]) {
+                time[detail.time] = [];
+            }
+            time[detail.time].push(detail);
+            return time;
+        }, {});
+        result = Object.entries(resultRaw)
+            .sort((a, b) => a[0] - b[0])
+            .map(([time, detail]) => ({
+                time: time,
+                detail: detail.sort((p1, p2) => p1.id - p2.id)
+            }));
+        setRemindList(result)
+        console.log(result)
     }
 
     return (
@@ -294,6 +418,31 @@ const HomePage = () => {
                 margin: '0 auto', // Center content
             }}
         >
+            <Box
+                sx={{
+                    position: "fixed",
+                    top: "60px", // Adjust for vertical positioning
+                    right: "10px", // Adjust for horizontal positioning
+                    zIndex: 1000,
+                    display: "flex",
+                    alignItems: "center",
+                    cursor: "pointer",
+                    gap: 1,
+                }}
+                onClick={() => setOpenAIModal(true)}
+            >
+                <Tooltip title="I can ask for more health advice" placement="left">
+                    <Avatar
+                        src={BotImage} // Replace with your bot icon URL
+                        alt="Bot Icon"
+                        sx={{
+                            width: 70, // Adjust size
+                            height: 70,
+                            boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                        }}
+                    />
+                </Tooltip>
+            </Box>
             <Typography
                 variant="body2"
                 sx={{
@@ -323,9 +472,6 @@ const HomePage = () => {
                     </Typography>
                     <IconButton onClick={() => setOpenVoiceModal(true)}>
                         <SettingsIcon />
-                    </IconButton>
-                    <IconButton onClick={() => setOpenAIModal(true)}>
-                        <SupportAgentIcon />
                     </IconButton>
                 </Box>
             </Box>
@@ -380,44 +526,52 @@ const HomePage = () => {
             >
                 Today Will Be
             </Typography>
-            <Typography variant="h4" sx={{ color: 'red', textAlign: 'right', marginBottom: 2 }}>
-                8:00 AM
-            </Typography>
-            <Box>
-                {[{ name: 'Dechloridation citrate tablet', quantity: '1 grain' }, { name: 'Vitamin', quantity: '2 grains' }].map(
-                    (medication, index) => (
-                        <Box
-                            key={index}
-                            sx={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                padding: 1,
-                                backgroundColor: '#f9fbe7',
-                                borderRadius: 1,
-                                marginBottom: 1,
-                                border: '1px solid #cddc39',
-                            }}
-                        >
-                            <Typography variant="body1">
-                                No.{index + 1} Warehouse
-                            </Typography>
-                            <Box>
-                                <Typography variant="body2">{medication.name}</Typography>
-                                <Typography variant="body2" sx={{ fontWeight: 'bold', textAlign: 'end' }}>
-                                    {medication.quantity}
-                                </Typography>
-                            </Box>
+            {remindList.map(
+                (e, i) => {
+                    return (<>
+                        <Typography variant="h4" sx={{ color: 'red', textAlign: 'right', marginBottom: 2 }}>
+                            {e.time}
+                        </Typography>
+                        <Box>
+                            {e.detail.map(
+                                (medication, index) => (
+                                    <Box
+                                        key={index}
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'space-between',
+                                            padding: 1,
+                                            backgroundColor: '#f9fbe7',
+                                            borderRadius: 1,
+                                            marginBottom: 1,
+                                            border: '1px solid #cddc39',
+                                        }}
+                                    >
+                                        <Typography variant="body1">
+                                            No.{medication.id + 1} Warehouse
+                                        </Typography>
+                                        <Box>
+                                            <Typography variant="body2">{medication.name}</Typography>
+                                            <Typography variant="body2" sx={{ fontWeight: 'bold', textAlign: 'end' }}>
+                                                {`${medication.grainsPerTime} gains`}
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                )
+                            )}
                         </Box>
+                    </>
                     )
-                )}
-            </Box>
-            {popupOpen && <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} onClickAddManual={handleOpenAddMedicineManual} onClickScan={() => { setopenScanBarCode(true); setPopupOpen(false); }} />}
+                }
+            )}
+
+            {popupOpen && <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} onClickAddManual={handleOpenAddMedicineManual} onClickScan={() => { setOpenScanBarCode(true); setPopupOpen(false); }} />}
             {openDetailModal && <MedicineDetailModal open={openDetailModal} handleClose={handleCloseDetailModal} details={medicineDetails} handleOpenSchedulingModal={handleOpenSchedulingModal} setMedicines={setMedicines} />}
-            {openSchedulingModal && <SchedulingModal open={openSchedulingModal} handleClose={handleCloseSchedulingModal} />}
-            {openAddMedicineManual && <AddMedicineManualModal open={openAddMedicineManual} handleClose={handleCloseAddMedicineManual} step={step} setStep={setStep} medicines={medicines} medicineIndex={medicineIndexAdd} setMedicines={setMedicines} />}
+            {openSchedulingModal && <SchedulingModal open={openSchedulingModal} handleClose={handleCloseSchedulingModal} medicineIndexAdd={medicineIndexAdd} handleChangeRemindList={handleChangeRemindList} />}
+            {openAddMedicineManual && <AddMedicineManualModal open={openAddMedicineManual} handleClose={handleCloseAddMedicineManual} step={step} setStep={setStep} medicines={medicines} medicineIndex={medicineIndexAdd} setMedicines={setMedicines} handleChangeRemindList={handleChangeRemindList}/>}
             {openVoiceModal && <SetVoiceModal open={openVoiceModal} onClose={() => setOpenVoiceModal(false)} />}
             {openAIModal && <AIModal open={openAIModal} onClose={() => setOpenAIModal(false)} />}
-            {openScanBarCode && <BarcodeModal open={openScanBarCode} onClose={() => setopenScanBarCode(false)} handleSubmit={handleSubmitScan}/>}
+            {openScanBarCode && <BarcodeModal open={openScanBarCode} onClose={() => setOpenScanBarCode(false)} handleSubmit={handleSubmitScan} />}
         </Box>
     );
 };
