@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/medicinereminderapp/static/css/main.f855e6bc.css",
-    "main.js": "/medicinereminderapp/static/js/main.a0052bb2.js",
+    "main.js": "/medicinereminderapp/static/js/main.ba920da0.js",
     "static/js/453.148fbcad.chunk.js": "/medicinereminderapp/static/js/453.148fbcad.chunk.js",
     "static/media/image.png": "/medicinereminderapp/static/media/image.3e52d767377a3667ccff.png",
     "index.html": "/medicinereminderapp/index.html",
     "main.f855e6bc.css.map": "/medicinereminderapp/static/css/main.f855e6bc.css.map",
-    "main.a0052bb2.js.map": "/medicinereminderapp/static/js/main.a0052bb2.js.map",
+    "main.ba920da0.js.map": "/medicinereminderapp/static/js/main.ba920da0.js.map",
     "453.148fbcad.chunk.js.map": "/medicinereminderapp/static/js/453.148fbcad.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f855e6bc.css",
-    "static/js/main.a0052bb2.js"
+    "static/js/main.ba920da0.js"
   ]
 }
