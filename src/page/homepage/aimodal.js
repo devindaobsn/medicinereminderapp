@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Box, Typography, Button, TextField, IconButton, Avatar } from '@mui/material';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'; // Back icon
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import BotImage from './image.png'
 
 const AIModal = ({ open, onClose }) => {
     const [messages, setMessages] = useState([
@@ -88,15 +88,16 @@ const AIModal = ({ open, onClose }) => {
                                 fontSize: 32,
                                 marginRight: 0,
                                 marginLeft: 1,
-                                
+
                             }} />}
 
-                            {message.type === 'bot' && <SupportAgentIcon
+                            {message.type === 'bot' && <Avatar
+                                src={BotImage} // Replace with your bot icon URL
+                                alt="Bot Icon"
                                 sx={{
-                                    fontSize: 32,
-                                    marginRight: 1 ,
-                                    marginLeft:  0,
-                                    color: 'primary.main' ,
+                                    width: 70, // Adjust size
+                                    height: 70,
+                                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
                                 }}
                             />}
                             <Typography

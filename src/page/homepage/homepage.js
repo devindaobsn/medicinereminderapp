@@ -6,7 +6,6 @@ import MedicineDetailModal from './medicinedetailmodal';
 import SchedulingModal from './schedulingmodal';
 import AddMedicineManualModal from './addmedicinemanualmodal';
 import SetVoiceModal from './setVoiceModal';
-import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 import AIModal from './aimodal';
 import BarcodeModal from './barcodemodal';
 import BotImage from './image.png'
@@ -299,9 +298,9 @@ const HomePage = () => {
     ]);
 
     useEffect(() => {
-        const medicines = localStorage.getItem('medicines');
-        if (medicines) {
-            setMedicines(JSON.parse(medicines));
+        const medicinesLocal = localStorage.getItem('medicines');
+        if (medicinesLocal) {
+            setMedicines(JSON.parse(medicinesLocal));
         } else {
             localStorage.setItem('medicines', JSON.stringify(medicines));
         }
@@ -380,8 +379,8 @@ const HomePage = () => {
         medicines.forEach(element => {
             if (element.name != '') {
                 element.detailSchedule.forEach(e => {
-                    // if (e.time >= currentTimeString) {
-                    if (true) {
+                    if (e.time >= currentTimeString) {
+                    // if (true) {
                         resultNoGroup = [...resultNoGroup, {
                             time: e.time,
                             name: element.name,
@@ -406,7 +405,6 @@ const HomePage = () => {
                 detail: detail.sort((p1, p2) => p1.id - p2.id)
             }));
         setRemindList(result)
-        console.log(result)
     }
 
     return (
@@ -568,7 +566,7 @@ const HomePage = () => {
             {popupOpen && <AddMedicinePopUp open={popupOpen} onClose={handleClosePopUp} onClickAddManual={handleOpenAddMedicineManual} onClickScan={() => { setOpenScanBarCode(true); setPopupOpen(false); }} />}
             {openDetailModal && <MedicineDetailModal open={openDetailModal} handleClose={handleCloseDetailModal} details={medicineDetails} handleOpenSchedulingModal={handleOpenSchedulingModal} setMedicines={setMedicines} />}
             {openSchedulingModal && <SchedulingModal open={openSchedulingModal} handleClose={handleCloseSchedulingModal} medicineIndexAdd={medicineIndexAdd} handleChangeRemindList={handleChangeRemindList} />}
-            {openAddMedicineManual && <AddMedicineManualModal open={openAddMedicineManual} handleClose={handleCloseAddMedicineManual} step={step} setStep={setStep} medicines={medicines} medicineIndex={medicineIndexAdd} setMedicines={setMedicines} handleChangeRemindList={handleChangeRemindList}/>}
+            {openAddMedicineManual && <AddMedicineManualModal open={openAddMedicineManual} handleClose={handleCloseAddMedicineManual} step={step} setStep={setStep} medicines={medicines} medicineIndex={medicineIndexAdd} setMedicines={setMedicines} handleChangeRemindList={handleChangeRemindList} />}
             {openVoiceModal && <SetVoiceModal open={openVoiceModal} onClose={() => setOpenVoiceModal(false)} />}
             {openAIModal && <AIModal open={openAIModal} onClose={() => setOpenAIModal(false)} />}
             {openScanBarCode && <BarcodeModal open={openScanBarCode} onClose={() => setOpenScanBarCode(false)} handleSubmit={handleSubmitScan} />}
