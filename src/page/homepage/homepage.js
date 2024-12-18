@@ -299,7 +299,7 @@ const HomePage = () => {
 
     useEffect(() => {
         const medicinesLocal = localStorage.getItem('medicines');
-        if (medicinesLocal) {
+        if (medicinesLocal && 'detailSchedule' in JSON.parse(medicinesLocal)[0]) {
             setMedicines(JSON.parse(medicinesLocal));
         } else {
             localStorage.setItem('medicines', JSON.stringify(medicines));
@@ -380,7 +380,7 @@ const HomePage = () => {
             if (element.name != '') {
                 element.detailSchedule.forEach(e => {
                     if (e.time >= currentTimeString) {
-                    // if (true) {
+                        // if (true) {
                         resultNoGroup = [...resultNoGroup, {
                             time: e.time,
                             name: element.name,

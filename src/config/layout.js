@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import HistoryIcon from '@mui/icons-material/History';
@@ -9,14 +9,6 @@ import RecordPage from '../page/recordpage';
 import ChartPage from '../page/chartpage';
 
 const BottomNav = ({ value, setValue }) => {
-  const navigate = useNavigate();
-
-  React.useEffect(() => {
-    const routes = ['/medicinereminderapp', '/medicinereminderapp/record', '/medicinereminderapp/chart'];
-    if (routes[value]) {
-      navigate(routes[value]);
-    }
-  }, [value, navigate]);
 
   return (
     <BottomNavigation
@@ -68,13 +60,10 @@ const MobileResponsiveAppWithRouting = () => {
       >
         {/* Main Content */}
         <Box sx={{ flex: 1 }}>
-          <Routes>
-            <Route path="/medicinereminderapp" element={<HomePage />} />
-            <Route path="/medicinereminderapp/record" element={<RecordPage />} />
-            <Route path="/medicinereminderapp/chart" element={<ChartPage />} />
-          </Routes>
+          {value == 0 && <HomePage />}
+          {value == 1 && <RecordPage />}
+          {value == 2 && <ChartPage />}
         </Box>
-
         <BottomNav value={value} setValue={setValue} />
       </Box>
     </Router>
